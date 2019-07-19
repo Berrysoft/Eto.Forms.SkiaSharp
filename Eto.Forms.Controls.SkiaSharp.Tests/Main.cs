@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Eto.Forms.Controls.SkiaSharp.Shared;
 using SkiaSharp;
 
 namespace Eto.Forms.Controls.SkiaSharp.Tests

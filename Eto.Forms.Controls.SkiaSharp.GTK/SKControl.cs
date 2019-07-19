@@ -1,5 +1,4 @@
 ﻿using System;
-using Eto.Forms.Controls.SkiaSharp.Shared;
 using Eto.GtkSharp.Forms;
 using Gdk;
 using Gtk;
@@ -7,7 +6,7 @@ using SkiaSharp;
 
 namespace Eto.Forms.Controls.SkiaSharp.GTK
 {
-    public class SKControlHandler : GtkControl<Gtk.EventBox, SKControl, Control.ICallback>, SKControl.ISKControl
+    public class SKControlHandler : GtkControl<EventBox, SKControl, Control.ICallback>, SKControl.ISKControl
     {
 
         private SKControl_GTK nativecontrol;

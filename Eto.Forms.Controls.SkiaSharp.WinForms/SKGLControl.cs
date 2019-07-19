@@ -5,7 +5,7 @@ using SkiaSharp.Views.Desktop;
 
 namespace Eto.Forms.Controls.SkiaSharp.WinForms
 {
-    public class SKGLControlHandler : WindowsControl<System.Windows.Forms.Control, Shared.SKGLControl, Control.ICallback>, Shared.SKGLControl.ISKGLControl
+    public class SKGLControlHandler : WindowsControl<System.Windows.Forms.Control, SKGLControl, Control.ICallback>, SKGLControl.ISKGLControl
     {
 
         private SKGLControl_WinForms nativecontrol;
@@ -24,7 +24,7 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
 
     }
 
-    public class SKGLControl_WinForms : SKGLControl
+    public class SKGLControl_WinForms : global::SkiaSharp.Views.Desktop.SKGLControl
     {
 
         public new Action<SKSurface> PaintSurface;

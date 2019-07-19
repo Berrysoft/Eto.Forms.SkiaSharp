@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net48;netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Eto.Forms" Version="2.5.0-beta.1" />
+    <PackageReference Include="Eto.Platform.Windows" Version="2.5.0-beta.1" />
+    <PackageReference Include="Eto.Platform.Wpf" Version="2.5.0-beta.1" />
+    <PackageReference Include="Eto.Platform.Gtk" Version="2.5.0-beta.1" />
+    <PackageReference Include="Eto.Platform.Mac64" Version="2.5.0-beta.1" />
+    <PackageReference Include="OpenTK" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp.GTK\Eto.Forms.Controls.SkiaSharp.GTK.csproj" />
+    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp.Mac\Eto.Forms.Controls.SkiaSharp.Mac.csproj" />
+    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp.WinForms\Eto.Forms.Controls.SkiaSharp.WinForms.csproj" />
+    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp.WPF\Eto.Forms.Controls.SkiaSharp.WPF.csproj" />
+    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp\Eto.Forms.Controls.SkiaSharp.csproj" />
+  </ItemGroup>
+
+</Project>

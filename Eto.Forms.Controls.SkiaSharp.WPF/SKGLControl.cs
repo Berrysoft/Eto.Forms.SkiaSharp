@@ -8,7 +8,7 @@ using SkiaSharp;
 
 namespace Eto.Forms.Controls.SkiaSharp.WPF
 {
-    public class SKGLControlHandler : WpfFrameworkElement<FrameworkElement, Shared.SKGLControl, Control.ICallback>, Shared.SKGLControl.ISKGLControl
+    public class SKGLControlHandler : WpfFrameworkElement<FrameworkElement, SKGLControl, Control.ICallback>, SKGLControl.ISKGLControl
     {
 
         private SKGLControl_WPF nativecontrol;

@@ -9,7 +9,7 @@ using SkiaSharp.Views.WPF;
 
 namespace Eto.Forms.Controls.SkiaSharp.WPF
 {
-    public class SKControlHandler : WpfFrameworkElement<FrameworkElement, Shared.SKControl, Control.ICallback>, Shared.SKControl.ISKControl
+    public class SKControlHandler : WpfFrameworkElement<FrameworkElement, SKControl, Control.ICallback>, SKControl.ISKControl
     {
 
         private SKControl_WPF nativecontrol;

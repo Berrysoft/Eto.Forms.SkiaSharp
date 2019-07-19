@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp.Shared\Eto.Forms.Controls.SkiaSharp.Shared.csproj" />
+    <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp\Eto.Forms.Controls.SkiaSharp.csproj" />
   </ItemGroup>
 
 </Project>
