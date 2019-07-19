@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Linq;
+using Eto.WinForms.Forms;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
-using System.Windows.Forms;
-using System.Drawing;
-using System.Drawing.Imaging;
-using OpenTK;
-using Eto.WinForms;
 
 namespace Eto.Forms.Controls.SkiaSharp.WinForms
 {
-    public class SKGLControlHandler : Eto.WinForms.Forms.WindowsControl<System.Windows.Forms.Control, Shared.SKGLControl, Shared.SKGLControl.ICallback>, Shared.SKGLControl.ISKGLControl
+    public class SKGLControlHandler : WindowsControl<System.Windows.Forms.Control, Shared.SKGLControl, Control.ICallback>, Shared.SKGLControl.ISKGLControl
     {
 
         private SKGLControl_WinForms nativecontrol;
@@ -18,18 +13,12 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
         public SKGLControlHandler()
         {
             nativecontrol = new SKGLControl_WinForms();
-            this.Control = nativecontrol;
+            Control = nativecontrol;
         }
         public Action<SKSurface> PaintSurfaceAction
         {
-            get
-            {
-                return nativecontrol.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.PaintSurface = value;
-            }
+            get => nativecontrol.PaintSurface;
+            set => nativecontrol.PaintSurface = value;
         }
 
 
@@ -42,10 +31,10 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
 
         public bool WPFHost = false;
 
-        public Action<Eto.Forms.MouseEventArgs> WPFMouseDown;
-        public Action<Eto.Forms.MouseEventArgs> WPFMouseUp;
-        public Action<Eto.Forms.MouseEventArgs> WPFMouseDoubleClick;
-        
+        public Action<MouseEventArgs> WPFMouseDown;
+        public Action<MouseEventArgs> WPFMouseUp;
+        public Action<MouseEventArgs> WPFMouseDoubleClick;
+
         private GRContext grContext;
         private GRBackendRenderTargetDesc renderTarget;
 
@@ -78,7 +67,7 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
             {
 
                 if (PaintSurface != null) PaintSurface.Invoke(surface);
-                
+
                 // start drawing
                 OnPaintSurface(new SKPaintGLSurfaceEventArgs(surface, renderTarget));
 

@@ -1,14 +1,13 @@
-﻿using Eto.Forms.Controls.SkiaSharp.Shared;
+﻿using System;
+using Eto.Forms.Controls.SkiaSharp.Shared;
+using Eto.GtkSharp.Forms;
+using Gdk;
+using Gtk;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eto.Forms.Controls.SkiaSharp.GTK
 {
-    public class SKControlHandler : Eto.GtkSharp.Forms.GtkControl<Gtk.EventBox, SKControl, SKControl.ICallback>, SKControl.ISKControl
+    public class SKControlHandler : GtkControl<Gtk.EventBox, SKControl, Control.ICallback>, SKControl.ISKControl
     {
 
         private SKControl_GTK nativecontrol;
@@ -16,35 +15,30 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
         public SKControlHandler()
         {
             nativecontrol = new SKControl_GTK();
-            this.Control = nativecontrol;
+            Control = nativecontrol;
         }
 
         public override Eto.Drawing.Color BackgroundColor { get; set; }
 
         public Action<SKSurface> PaintSurfaceAction
         {
-            get {
-                return nativecontrol.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.PaintSurface = value;                
-            }
+            get => nativecontrol.PaintSurface;
+            set => nativecontrol.PaintSurface = value;
         }
 
     }
 
-    public class SKControl_GTK : Gtk.EventBox
+    public class SKControl_GTK : EventBox
     {
 
         public Action<SKSurface> PaintSurface;
 
         public SKControl_GTK()
         {
-            this.AddEvents((int)Gdk.EventMask.PointerMotionMask);
+            AddEvents((int)EventMask.PointerMotionMask);
         }
 
-         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
+        protected override bool OnDamageEvent(EventExpose evnt)
         {
 
             var rect = Allocation;
@@ -53,7 +47,7 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
             {
                 var area = evnt.Area;
                 SKColorType ctype = SKColorType.Bgra8888;
-                using (Cairo.Context cr = Gdk.CairoHelper.Create(base.GdkWindow))
+                using (Cairo.Context cr = Gdk.CairoHelper.Create(GdkWindow))
                 {
                     if (cr == null) { Console.WriteLine("Cairo Context is null"); }
                     using (var bitmap = new SKBitmap(rect.Width, rect.Height, ctype, SKAlphaType.Premul))

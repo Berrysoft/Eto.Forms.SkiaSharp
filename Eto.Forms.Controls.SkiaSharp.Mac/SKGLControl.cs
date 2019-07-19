@@ -1,15 +1,14 @@
-﻿using AppKit;
-using CoreGraphics;
-using Eto.Forms;
+﻿using System;
 using Eto.Forms.Controls.SkiaSharp.Shared;
+using Eto.Mac.Forms;
+using MonoMac.AppKit;
+using MonoMac.CoreGraphics;
 using SkiaSharp;
 using SkiaSharp.Views.GlesInterop;
-using SkiaSharp.Views.Mac;
-using System;
 
 namespace Eto.Forms.Controls.SkiaSharp.Mac
 {
-    public class SKGLControlHandler : Eto.Mac.Forms.MacView<NSView, SKGLControl, SKGLControl.ICallback>, SKGLControl.ISKGLControl
+    public class SKGLControlHandler : MacView<NSView, SKGLControl, Control.ICallback>, SKGLControl.ISKGLControl
     {
 
         private SKGLControl_Mac nativecontrol;
@@ -57,13 +56,13 @@ namespace Eto.Forms.Controls.SkiaSharp.Mac
     }
 
 
-    public class SKGLControl_Mac : Views.Mac.SKGLView, Eto.Mac.Forms.IMacControl
+    public class SKGLControl_Mac : Views.Mac.SKGLView, IMacControl
     {
 
         public Action<SKSurface> PaintSurface;
 
         private NSTrackingArea trackarea;
-        
+
         public SKGLControl_Mac() : base()
         {
             BecomeFirstResponder();
@@ -112,7 +111,7 @@ namespace Eto.Forms.Controls.SkiaSharp.Mac
         {
 
             base.DrawRect(dirtyRect);
-            
+
             var size = ConvertSizeToBacking(Bounds.Size);
             renderTarget.Width = (int)size.Width;
             renderTarget.Height = (int)size.Height;

@@ -1,14 +1,15 @@
-﻿using SkiaSharp;
-using SkiaSharp.Views.Desktop;
-using SkiaSharp.Views.WPF;
+﻿using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System;
+using Eto.Wpf.Forms;
+using SkiaSharp;
+using SkiaSharp.Views.Desktop;
+using SkiaSharp.Views.WPF;
 
 namespace Eto.Forms.Controls.SkiaSharp.WPF
 {
-    public class SKControlHandler : Eto.Wpf.Forms.WpfFrameworkElement<FrameworkElement, Shared.SKControl, Shared.SKControl.ICallback>, Shared.SKControl.ISKControl
+    public class SKControlHandler : WpfFrameworkElement<FrameworkElement, Shared.SKControl, Control.ICallback>, Shared.SKControl.ISKControl
     {
 
         private SKControl_WPF nativecontrol;
@@ -16,7 +17,7 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
         public SKControlHandler()
         {
             nativecontrol = new SKControl_WPF();
-            this.Control = nativecontrol;
+            Control = nativecontrol;
         }
 
         public override Eto.Drawing.Color BackgroundColor { get; set; }
@@ -33,14 +34,14 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
         }
 
     }
-        
+
     public class SKControl_WPF : SKElement
     {
 
         public new Action<SKSurface> PaintSurface;
 
         private WriteableBitmap bitmap;
-        
+
 
         public SKControl_WPF()
         {
@@ -91,6 +92,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
             drawingContext.DrawImage(bitmap, new Rect(0, 0, ActualWidth, ActualHeight));
         }
 
-   }
+    }
 
 }

@@ -1,13 +1,13 @@
-﻿using Eto.Forms;
-using SkiaSharp;
-using SkiaSharp.Views.Desktop;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Eto.WinForms.Forms;
+using SkiaSharp;
+using SkiaSharp.Views.Desktop;
 
 namespace Eto.Forms.Controls.SkiaSharp.WinForms
 {
-    public class SKControlHandler : Eto.WinForms.Forms.WindowsControl<System.Windows.Forms.Control, Shared.SKControl, Shared.SKControl.ICallback>, Shared.SKControl.ISKControl
+    public class SKControlHandler : WindowsControl<System.Windows.Forms.Control, Shared.SKControl, Control.ICallback>, Shared.SKControl.ISKControl
     {
 
         private SKControl_WinForms nativecontrol;
@@ -15,18 +15,12 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
         public SKControlHandler()
         {
             nativecontrol = new SKControl_WinForms();
-            this.Control = nativecontrol;
+            Control = nativecontrol;
         }
         public Action<SKSurface> PaintSurfaceAction
         {
-            get
-            {
-                return nativecontrol.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.PaintSurface = value;
-            }
+            get => nativecontrol.PaintSurface;
+            set => nativecontrol.PaintSurface = value;
         }
 
 
@@ -37,8 +31,8 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
 
         public new Action<SKSurface> PaintSurface;
 
-        private System.Drawing.Bitmap bitmap;
-        
+        private Bitmap bitmap;
+
         public SKControl_WinForms()
         {
         }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29111.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eto.Forms.Controls.SkiaSharp", "Eto.Forms.Controls.SkiaSharp\Eto.Forms.Controls.SkiaSharp.csproj", "{D54B1C45-9382-476D-8E3A-192D77C871EC}"
 EndProject
@@ -14,20 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eto.Forms.Controls.SkiaSharp.GTK", "Eto.Forms.Controls.SkiaSharp.GTK\Eto.Forms.Controls.SkiaSharp.GTK.csproj", "{7B62BC2B-1598-4FB5-ADB9-EEDA64366182}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eto.Forms.Controls.SkiaSharp.Shared", "Eto.Forms.Controls.SkiaSharp.Shared\Eto.Forms.Controls.SkiaSharp.Shared.csproj", "{5A303CE8-BF51-460C-8630-58A983686ED7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native SkiaSharp Libraries", "Native SkiaSharp Libraries", "{49986FA8-0B12-4332-A5D2-C9FED0826876}"
-	ProjectSection(SolutionItems) = preProject
-		Native SkiaSharp Libraries\Windows 64-bit\libSkiaSharp.dll = Native SkiaSharp Libraries\Windows 64-bit\libSkiaSharp.dll
-		Native SkiaSharp Libraries\macOS 64-bit\libSkiaSharp.dylib = Native SkiaSharp Libraries\macOS 64-bit\libSkiaSharp.dylib
-		Native SkiaSharp Libraries\Linux 64-bit\libSkiaSharp.so = Native SkiaSharp Libraries\Linux 64-bit\libSkiaSharp.so
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{872C8260-78ED-4BB8-BEFC-B26FE0C46C34}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,5 +48,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6DC04B56-0058-4331-B130-013B3B73FC77}
 	EndGlobalSection
 EndGlobal

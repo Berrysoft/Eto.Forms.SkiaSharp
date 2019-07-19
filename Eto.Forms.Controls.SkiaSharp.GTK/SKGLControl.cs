@@ -1,14 +1,13 @@
-﻿using Eto.Forms.Controls.SkiaSharp.Shared;
+﻿using System;
+using Eto.Forms.Controls.SkiaSharp.Shared;
+using Eto.GtkSharp.Forms;
+using Gdk;
+using OpenTK;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eto.Forms.Controls.SkiaSharp.GTK
 {
-    public class SKGLControlHandler : Eto.GtkSharp.Forms.GtkControl<OpenTK.GLWidget, SKGLControl, SKGLControl.ICallback>, SKGLControl.ISKGLControl
+    public class SKGLControlHandler : GtkControl<GLWidget, SKGLControl, Control.ICallback>, SKGLControl.ISKGLControl
     {
 
         private SKGLControl_GTK nativecontrol;
@@ -16,25 +15,19 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
         public SKGLControlHandler()
         {
             nativecontrol = new SKGLControl_GTK();
-            this.Control = nativecontrol;
+            Control = nativecontrol;
         }
 
         public override Eto.Drawing.Color BackgroundColor { get; set; }
         public Action<SKSurface> PaintSurfaceAction
         {
-            get
-            {
-                return nativecontrol.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.PaintSurface = value;
-            }
+            get => nativecontrol.PaintSurface;
+            set => nativecontrol.PaintSurface = value;
         }
 
     }
 
-    public class SKGLControl_GTK : OpenTK.GLWidget
+    public class SKGLControl_GTK : GLWidget
     {
 
         public Action<SKSurface> PaintSurface;
@@ -42,9 +35,9 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
         private GRContext grContext;
         private GRBackendRenderTargetDesc renderTarget;
 
-        public SKGLControl_GTK(): base()
+        public SKGLControl_GTK() : base()
         {
-            this.AddEvents((int)Gdk.EventMask.PointerMotionMask);
+            AddEvents((int)EventMask.PointerMotionMask);
         }
 
         protected override void OnRenderFrame()
@@ -96,12 +89,9 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
             }
 
         }
-
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-
-            base.Dispose();
-
+            base.Dispose(disposing);
             // clean up
             if (grContext != null)
             {
@@ -109,7 +99,7 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
                 grContext = null;
             }
         }
-        
+
         public static GRBackendRenderTargetDesc CreateRenderTarget()
         {
 

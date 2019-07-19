@@ -10,6 +10,7 @@ using OpenTK.Platform.MacOS;
 using OpenTK.Platform.Windows;
 using OpenTK.Platform.X11;
 using System.Runtime.InteropServices;
+using Gdk;
 
 namespace OpenTK
 {
@@ -147,21 +148,6 @@ namespace OpenTK
             base.Destroy();
         }
 
-#if !GTK3
-        /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
-        /// </summary>
-        /// <param name="disposing"></param>
-        public override void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-
-            base.Dispose();
-        }
-#endif
-
-#if GTK3
         /// <summary>
         /// Disposes the current object, releasing any native resources it was using.
         /// </summary>
@@ -169,14 +155,6 @@ namespace OpenTK
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-#else
-        /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
-        /// </summary>
-        /// <param name="disposing"></param>
-        public virtual void Dispose(bool disposing)
-        {
-#endif
             if (disposing)
             {
                 _GraphicsContext.MakeCurrent(_WindowInfo);
@@ -275,7 +253,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
-        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
+        protected override bool OnDamageEvent(Gdk.EventExpose evnt)
 #endif
         {
             if (!_Initialized)
@@ -290,7 +268,7 @@ namespace OpenTK
 #if GTK3
             var result = base.OnDrawn(cr);
 #else
-            bool result = base.OnExposeEvent(evnt);
+            bool result = base.OnDamageEvent(evnt);
 #endif
 
             OnRenderFrame();

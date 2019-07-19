@@ -1,5 +1,5 @@
-﻿using AppKit;
-using CoreGraphics;
+﻿using MonoMac.AppKit;
+using MonoMac.CoreGraphics;
 using SkiaSharp;
 using SkiaSharp.Views.Mac;
 using System;

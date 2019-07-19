@@ -1,14 +1,14 @@
-﻿using Eto.Forms;
+﻿using System;
 using Eto.Forms.Controls.SkiaSharp.Shared;
-using AppKit;
+using Eto.Mac.Forms;
+using MonoMac.AppKit;
+using MonoMac.CoreGraphics;
 using SkiaSharp;
 using SkiaSharp.Views.Mac;
-using System;
-using CoreGraphics;
 
 namespace Eto.Forms.Controls.SkiaSharp.Mac
 {
-    public class SKControlHandler : Eto.Mac.Forms.MacView<NSView, SKControl, SKControl.ICallback>, SKControl.ISKControl
+    public class SKControlHandler : MacView<NSView, SKControl, Control.ICallback>, SKControl.ISKControl
     {
 
         private SKControl_Mac nativecontrol;
@@ -31,38 +31,24 @@ namespace Eto.Forms.Controls.SkiaSharp.Mac
             }
         }
 
-        public override NSView ContainerControl
-        {
-            get
-            {
-                return Control;
-            }
-        }
+        public override NSView ContainerControl => Control;
 
         public override bool Enabled { get; set; }
         public Action<SKSurface> PaintSurfaceAction
         {
-            get
-            {
-                return nativecontrol.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.PaintSurface = value;
-            }
+            get => nativecontrol.PaintSurface;
+            set => nativecontrol.PaintSurface = value;
         }
-
- 
     }
 
 
-    public class SKControl_Mac : NSView, Eto.Mac.Forms.IMacControl
+    public class SKControl_Mac : NSView, IMacControl
     {
 
         public Action<SKSurface> PaintSurface;
 
         private NSTrackingArea trackarea;
-        
+
         public float _lastTouchX;
         public float _lastTouchY;
 
@@ -117,7 +103,7 @@ namespace Eto.Forms.Controls.SkiaSharp.Mac
         {
 
             base.DrawRect(dirtyRect);
-                     
+
             var ctx = NSGraphicsContext.CurrentContext.GraphicsPort;
 
             // create the skia context

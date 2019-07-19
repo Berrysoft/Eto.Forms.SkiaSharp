@@ -1,15 +1,14 @@
-﻿using Eto.Forms.Controls.SkiaSharp.WinForms;
-using SkiaSharp;
-using SkiaSharp.Views.Desktop;
-using SkiaSharp.Views.WPF;
+﻿using System;
 using System.Windows;
+using System.Windows.Forms.Integration;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System;
+using Eto.Forms.Controls.SkiaSharp.WinForms;
+using Eto.Wpf.Forms;
+using SkiaSharp;
 
 namespace Eto.Forms.Controls.SkiaSharp.WPF
 {
-    public class SKGLControlHandler : Eto.Wpf.Forms.WpfFrameworkElement<FrameworkElement, Shared.SKGLControl, Shared.SKGLControl.ICallback>, Shared.SKGLControl.ISKGLControl
+    public class SKGLControlHandler : WpfFrameworkElement<FrameworkElement, Shared.SKGLControl, Control.ICallback>, Shared.SKGLControl.ISKGLControl
     {
 
         private SKGLControl_WPF nativecontrol;
@@ -20,28 +19,22 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
 
             // Create the winforms control
 
-            nativecontrol.WinFormsControl = new WinForms.SKGLControl_WinForms();
+            nativecontrol.WinFormsControl = new SKGLControl_WinForms();
 
-            this.Control = nativecontrol;
+            Control = nativecontrol;
         }
 
         public override Eto.Drawing.Color BackgroundColor { get; set; }
 
         public Action<SKSurface> PaintSurfaceAction
         {
-            get
-            {
-                return nativecontrol.WinFormsControl.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.WinFormsControl.PaintSurface = value;
-            }
+            get => nativecontrol.WinFormsControl.PaintSurface;
+            set => nativecontrol.WinFormsControl.PaintSurface = value;
         }
 
 
     }
-    
+
     public class SKGLControl_WPF : System.Windows.Controls.Grid
     {
 
@@ -49,15 +42,15 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
 
         public SKGLControl_WPF()
         {
-            this.Loaded += Window_Loaded;
+            Loaded += Window_Loaded;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
             // Create the interop host control.
-            System.Windows.Forms.Integration.WindowsFormsHost host = new System.Windows.Forms.Integration.WindowsFormsHost();
-            
+            WindowsFormsHost host = new WindowsFormsHost();
+
             WinFormsControl.WPFHost = true;
 
             // Assign the winforms control as the host control's child.
@@ -65,7 +58,7 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
 
             // Add the interop host control to the Grid
             // control's collection of child controls.
-            this.Children.Add(host);
+            Children.Add(host);
 
         }
 

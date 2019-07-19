@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eto.Forms;
-using Eto;
 using System.IO;
 using Eto.Forms.Controls.SkiaSharp.Shared;
 using SkiaSharp;
@@ -26,7 +20,7 @@ namespace Eto.Forms.Controls.SkiaSharp.Tests
 
             string WinR, LinuxR, MacR;
 
-            WinR = "WinForms"; // WPF, WinForms, GTK
+            WinR = "WPF"; // WPF, WinForms, GTK
             LinuxR = "GTK"; // GTK, WinForms
             MacR = "MonoMac"; // MonoMac, WinForms, GTK
 
@@ -93,8 +87,8 @@ namespace Eto.Forms.Controls.SkiaSharp.Tests
 
             // test CPU drawing (SKControl)
 
-            new Application(platform).Run(new FormCPU());
-            
+            //new Application(platform).Run(new FormCPU());
+
             // test OpenGL drawing (SKGLControl)
 
             new Application(platform).Run(new FormGL());
