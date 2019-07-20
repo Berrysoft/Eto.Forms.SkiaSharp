@@ -1,4 +1,15 @@
 # Eto.Forms.SkiaSharp
+
+[![Azure DevOps builds](https://strawberry-vs.visualstudio.com/Eto.Forms.SkiaSharp/_apis/build/status/Berrysoft.Eto.Forms.SkiaSharp?branch=master)](https://strawberry-vs.visualstudio.com/Eto.Forms.SkiaSharp/_build?definitionId=5)
+
+|Name|NuGet|
+|-|-|
+|Eto.Forms.Controls.SkiaSharp|[![Nuget](https://img.shields.io/nuget/v/Eto.Forms.Controls.SkiaSharp.svg)](https://www.nuget.org/packages/Eto.Forms.Controls.SkiaSharp/)|
+|Eto.Forms.Controls.SkiaSharp.GTK|[![Nuget](https://img.shields.io/nuget/v/Eto.Forms.Controls.SkiaSharp.GTK.svg)](https://www.nuget.org/packages/Eto.Forms.Controls.SkiaSharp.GTK/)|
+|Eto.Forms.Controls.SkiaSharp.Mac|[![Nuget](https://img.shields.io/nuget/v/Eto.Forms.Controls.SkiaSharp.Mac.svg)](https://www.nuget.org/packages/Eto.Forms.Controls.SkiaSharp.Mac/)|
+|Eto.Forms.Controls.SkiaSharp.WinForms|[![Nuget](https://img.shields.io/nuget/v/Eto.Forms.Controls.SkiaSharp.WinForms.svg)](https://www.nuget.org/packages/Eto.Forms.Controls.SkiaSharp.WinForms/)|
+|Eto.Forms.Controls.SkiaSharp.WPF|[![Nuget](https://img.shields.io/nuget/v/Eto.Forms.Controls.SkiaSharp.WPF.svg)](https://www.nuget.org/packages/Eto.Forms.Controls.SkiaSharp.WPF/)|
+
 SkiaSharp Canvas Controls for Eto.Forms
 
 This project exposes a 2D drawing canvas (SKCanvas) to Eto.Forms applications as a Control. You can use it to do custom drawing using the CPU or GPU to render text, shapes, images and animations.
