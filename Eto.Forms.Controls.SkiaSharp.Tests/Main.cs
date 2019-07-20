@@ -6,11 +6,9 @@ namespace Eto.Forms.Controls.SkiaSharp.Tests
 {
     class Tests
     {
-
         [STAThread]
         static void Main()
         {
-
             // initialize OpenTK
 
             OpenTK.Toolkit.Init();
@@ -25,63 +23,63 @@ namespace Eto.Forms.Controls.SkiaSharp.Tests
 
             Eto.Platform platform = null;
 
-            if (RunningPlatform() == Platform.Windows)
+            switch (RunningPlatform())
             {
-                switch (WinR)
-                {
-                    case "WPF":
-                        platform = new Eto.Wpf.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new WPF.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new WPF.SKGLControlHandler());
-                        break;
-                    case "WinForms":
-                        platform = new Eto.WinForms.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new WinForms.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new WinForms.SKGLControlHandler());
-                        break;
-                    case "GTK":
-                        platform = new Eto.GtkSharp.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new GTK.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new GTK.SKGLControlHandler());
-                        break;
-                }
-            }
-            else if (RunningPlatform() == Platform.Linux)
-            {
-                switch (LinuxR)
-                {
-                    case "WinForms":
-                        platform = new Eto.WinForms.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new WinForms.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new WinForms.SKGLControlHandler());
-                        break;
-                    case "GTK":
-                        platform = new Eto.GtkSharp.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new GTK.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new GTK.SKGLControlHandler());
-                        break;
-                }
-            }
-            else if (RunningPlatform() == Platform.Mac)
-            {
-                switch (MacR)
-                {
-                    case "MonoMac":
-                        platform = new Eto.Mac.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new Mac.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new Mac.SKGLControlHandler());
-                        break;
-                    case "WinForms":
-                        platform = new Eto.WinForms.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new WinForms.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new WinForms.SKGLControlHandler());
-                        break;
-                    case "GTK":
-                        platform = new Eto.GtkSharp.Platform();
-                        platform.Add<SKControl.ISKControl>(() => new GTK.SKControlHandler());
-                        platform.Add<SKGLControl.ISKGLControl>(() => new GTK.SKGLControlHandler());
-                        break;
-                }
+                case Platform.Windows:
+                    switch (WinR)
+                    {
+                        case "WPF":
+                            platform = new Eto.Wpf.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new WPF.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new WPF.SKGLControlHandler());
+                            break;
+                        case "WinForms":
+                            platform = new Eto.WinForms.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new WinForms.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new WinForms.SKGLControlHandler());
+                            break;
+                        case "GTK":
+                            platform = new Eto.GtkSharp.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new GTK.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new GTK.SKGLControlHandler());
+                            break;
+                    }
+                    break;
+                case Platform.Linux:
+                    switch (LinuxR)
+                    {
+                        case "WinForms":
+                            platform = new Eto.WinForms.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new WinForms.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new WinForms.SKGLControlHandler());
+                            break;
+                        case "GTK":
+                            platform = new Eto.GtkSharp.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new GTK.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new GTK.SKGLControlHandler());
+                            break;
+                    }
+                    break;
+                case Platform.Mac:
+                    switch (MacR)
+                    {
+                        case "MonoMac":
+                            platform = new Eto.Mac.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new Mac.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new Mac.SKGLControlHandler());
+                            break;
+                        case "WinForms":
+                            platform = new Eto.WinForms.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new WinForms.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new WinForms.SKGLControlHandler());
+                            break;
+                        case "GTK":
+                            platform = new Eto.GtkSharp.Platform();
+                            platform.Add<SKControl.ISKControl>(() => new GTK.SKControlHandler());
+                            platform.Add<SKGLControl.ISKGLControl>(() => new GTK.SKGLControlHandler());
+                            break;
+                    }
+                    break;
             }
 
             // test CPU drawing (SKControl)
@@ -163,7 +161,6 @@ namespace Eto.Forms.Controls.SkiaSharp.Tests
             };
             // draw the text (from the baseline)
             canvas.DrawText("SkiaSharp", 60, 160 + 80, textPaint);
-
         }
 
         public enum Platform
