@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netcoreapp3.0</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
+    <NoWarn>NU1701;$(NoWarn)</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

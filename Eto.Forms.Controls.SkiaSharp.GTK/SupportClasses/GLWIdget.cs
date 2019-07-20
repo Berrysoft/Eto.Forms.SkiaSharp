@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Threading;
 using System.ComponentModel;
-
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Gdk;
+using Gtk;
 using OpenTK.Graphics;
 using OpenTK.Platform;
-
-using Gtk;
-using OpenTK.Platform.MacOS;
-using OpenTK.Platform.Windows;
-using OpenTK.Platform.X11;
-using System.Runtime.InteropServices;
-using Gdk;
 
 namespace OpenTK
 {
@@ -19,17 +15,8 @@ namespace OpenTK
     /// </summary>
     public class GLWidget : DrawingArea
     {
-
-        [DllImport("libX11")]
-        static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
-
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
         static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
-
-        static IntPtr XGetVisualInfo(IntPtr display, XVisualInfoMask vinfo_mask, ref XVisualInfo template, out int nitems)
-        {
-            return XGetVisualInfoInternal(display, (IntPtr)(int)vinfo_mask, ref template, out nitems);
-        }
 
         private static int _GraphicsContextCount;
         private static bool _SharedContextInitialized = false;
@@ -130,14 +117,6 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Destructs this object.
-        /// </summary>
-        ~GLWidget()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
         /// Destroys this <see cref="Widget"/>, disposing it and destroying it in the context of GTK.
         /// </summary>
         public override void Destroy()
@@ -179,10 +158,7 @@ namespace OpenTK
         /// </summary>
         private static void OnGraphicsContextInitialized()
         {
-            if (GraphicsContextInitialized != null)
-            {
-                GraphicsContextInitialized(null, EventArgs.Empty);
-            }
+            GraphicsContextInitialized?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>
@@ -196,10 +172,7 @@ namespace OpenTK
         /// </summary>
         private static void OnGraphicsContextShuttingDown()
         {
-            if (GraphicsContextShuttingDown != null)
-            {
-                GraphicsContextShuttingDown(null, EventArgs.Empty);
-            }
+            GraphicsContextShuttingDown?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>
@@ -213,10 +186,7 @@ namespace OpenTK
         /// </summary>
         protected virtual void OnInitialized()
         {
-            if (Initialized != null)
-            {
-                Initialized(this, EventArgs.Empty);
-            }
+            Initialized?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -234,27 +204,15 @@ namespace OpenTK
         /// </summary>
         protected virtual void OnShuttingDown()
         {
-            if (ShuttingDown != null)
-            {
-                ShuttingDown(this, EventArgs.Empty);
-            }
+            ShuttingDown?.Invoke(this, EventArgs.Empty);
         }
 
-#if GTK3
         /// <summary>
         /// Called when the widget needs to be (fully or partially) redrawn.
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
         protected override bool OnDrawn(Cairo.Context cr)
-#else
-        /// <summary>
-        /// Called when the widget is exposed.
-        /// </summary>
-        /// <param name="cr"></param>
-        /// <returns></returns>
-        protected override bool OnDamageEvent(Gdk.EventExpose evnt)
-#endif
         {
             if (!_Initialized)
             {
@@ -265,17 +223,9 @@ namespace OpenTK
                 _GraphicsContext.MakeCurrent(_WindowInfo);
             }
 
-#if GTK3
             var result = base.OnDrawn(cr);
-#else
-            bool result = base.OnDamageEvent(evnt);
-#endif
 
             OnRenderFrame();
-
-#if !GTK3
-            evnt.Window.Display.Sync(); // Add Sync call to fix resize rendering problem (Jay L. T. Cornwall) - How does this affect VSync?
-#endif
 
             _GraphicsContext.SwapBuffers();
 
@@ -287,14 +237,11 @@ namespace OpenTK
         /// </summary>
         /// <param name="evnt"></param>
         /// <returns></returns>
-        protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
+        protected override bool OnConfigureEvent(EventConfigure evnt)
         {
             bool result = base.OnConfigureEvent(evnt);
 
-            if (_GraphicsContext != null)
-            {
-                _GraphicsContext.Update(_WindowInfo);
-            }
+            _GraphicsContext?.Update(_WindowInfo);
 
             return result;
         }
@@ -317,49 +264,35 @@ namespace OpenTK
                 }
             }
 
-            ColorFormat colorBufferColorFormat = new ColorFormat(ColorBPP);
-
-            ColorFormat accumulationColorFormat = new ColorFormat(AccumulatorBPP);
-
-            int buffers = 2;
-            if (SingleBuffer)
-            {
-                buffers--;
-            }
-
             GraphicsMode graphicsMode = new GraphicsMode();
 
             if (Configuration.RunningOnWindows)
             {
-                Console.WriteLine("OpenTK running on windows");
+                Debug.WriteLine("OpenTK running on windows");
             }
             else if (Configuration.RunningOnMacOS)
             {
-                Console.WriteLine("OpenTK running on OSX");
+                Debug.WriteLine("OpenTK running on OSX");
             }
             else
             {
-                Console.WriteLine("OpenTK running on X11");
+                Debug.WriteLine("OpenTK running on X11");
             }
 
-#if GTK3
-            IntPtr widgetWindowHandle = this.Window.Handle;
-#else
-            IntPtr widgetWindowHandle = this.GdkWindow.Handle;
-#endif
+            IntPtr widgetWindowHandle = Window.Handle;
 
             // IWindowInfo
             if (Configuration.RunningOnWindows)
             {
-                _WindowInfo = OpenTK.Platform.Utilities.CreateWindowsWindowInfo(widgetWindowHandle);
+                _WindowInfo = Utilities.CreateWindowsWindowInfo(widgetWindowHandle);
             }
             else if (Configuration.RunningOnMacOS)
             {
-                _WindowInfo = OpenTK.Platform.Utilities.CreateMacOSWindowInfo(widgetWindowHandle);
+                _WindowInfo = Utilities.CreateMacOSWindowInfo(widgetWindowHandle);
             }
             else
             {
-                _WindowInfo = X11.XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
+                _WindowInfo = X11.XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Display.NMonitors, widgetWindowHandle, this.Screen.RootWindow.Handle);
             }
 
             // GraphicsContext
@@ -385,18 +318,5 @@ namespace OpenTK
 
             OnInitialized();
         }
-
-        static object GetStaticFieldValue(Type type, string fieldName)
-        {
-            return type.GetField(fieldName,
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-        }
-
-        static void SetStaticFieldValue(Type type, string fieldName, object value)
-        {
-            type.GetField(fieldName,
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, value);
-        }
-
     }
 }

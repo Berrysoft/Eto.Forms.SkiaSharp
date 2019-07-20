@@ -3,11 +3,10 @@ using SkiaSharp;
 
 namespace Eto.Forms.Controls.SkiaSharp
 {
-
     [Handler(typeof(ISKGLControl))]
     public class SKGLControl : Control
     {
-        new ISKGLControl Handler { get { return (ISKGLControl)base.Handler; } }
+        new ISKGLControl Handler => (ISKGLControl)base.Handler;
 
         public Action<SKSurface> PaintSurfaceAction
         {

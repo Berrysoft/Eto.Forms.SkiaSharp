@@ -9,7 +9,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
 {
     public class SKControlHandler : WindowsControl<System.Windows.Forms.Control, SKControl, Control.ICallback>, SKControl.ISKControl
     {
-
         private SKControl_WinForms nativecontrol;
 
         public SKControlHandler()
@@ -22,13 +21,10 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
             get => nativecontrol.PaintSurface;
             set => nativecontrol.PaintSurface = value;
         }
-
-
     }
 
     public class SKControl_WinForms : global::SkiaSharp.Views.Desktop.SKControl
     {
-
         public new Action<SKSurface> PaintSurface;
 
         private Bitmap bitmap;
@@ -81,6 +77,5 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
                 bitmap = null;
             }
         }
-
     }
 }

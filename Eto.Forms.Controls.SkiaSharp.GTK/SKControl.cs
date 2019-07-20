@@ -1,4 +1,5 @@
 ﻿using System;
+using Cairo;
 using Eto.GtkSharp.Forms;
 using Gdk;
 using Gtk;
@@ -37,28 +38,24 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
             AddEvents((int)EventMask.PointerMotionMask);
         }
 
-        protected override bool OnDamageEvent(EventExpose evnt)
+        protected override bool OnDrawn(Context cr)
         {
-
-            var rect = Allocation;
-
-            if (rect.Width > 0 && rect.Height > 0)
+            var res = base.OnDrawn(cr);
+            if (res)
             {
-                var area = evnt.Area;
-                SKColorType ctype = SKColorType.Bgra8888;
-                using (Cairo.Context cr = Gdk.CairoHelper.Create(GdkWindow))
+                var rect = Allocation;
+                if (rect.Width > 0 && rect.Height > 0)
                 {
-                    if (cr == null) { Console.WriteLine("Cairo Context is null"); }
+                    SKColorType ctype = SKColorType.Bgra8888;
                     using (var bitmap = new SKBitmap(rect.Width, rect.Height, ctype, SKAlphaType.Premul))
                     {
-                        if (bitmap == null) { Console.WriteLine("Bitmap is null"); }
-                        IntPtr len;
-                        using (var skSurface = SKSurface.Create(bitmap.Info.Width, bitmap.Info.Height, ctype, SKAlphaType.Premul, bitmap.GetPixels(out len), bitmap.Info.RowBytes))
+                        if (bitmap == null) { throw new InvalidOperationException("Bitmap is null"); }
+                        using (var skSurface = SKSurface.Create(new SKImageInfo(bitmap.Info.Width, bitmap.Info.Height, ctype, SKAlphaType.Premul), bitmap.GetPixels(out IntPtr len), bitmap.Info.RowBytes))
                         {
-                            if (skSurface == null) { Console.WriteLine("skSurface is null"); }
+                            if (skSurface == null) { throw new InvalidOperationException("skSurface is null"); }
                             if (PaintSurface != null) PaintSurface.Invoke(skSurface);
                             skSurface.Canvas.Flush();
-                            using (Cairo.Surface surface = new Cairo.ImageSurface(bitmap.GetPixels(out len), Cairo.Format.Argb32, bitmap.Width, bitmap.Height, bitmap.Width * 4))
+                            using (Surface surface = new ImageSurface(bitmap.GetPixels(out len), Format.Argb32, bitmap.Width, bitmap.Height, bitmap.Width * 4))
                             {
                                 surface.MarkDirty();
                                 cr.SetSourceSurface(surface, 0, 0);
@@ -67,14 +64,8 @@ namespace Eto.Forms.Controls.SkiaSharp.GTK
                         }
                     }
                 }
-
             }
-
-            return true;
+            return res;
         }
-
     }
-
-
-
 }

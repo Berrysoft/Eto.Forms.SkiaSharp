@@ -3,15 +3,15 @@
 namespace SkiaSharp.Views.Mac
 {
     public class SKPaintGLSurfaceEventArgs : EventArgs
-	{
-		public SKPaintGLSurfaceEventArgs(SKSurface surface, GRBackendRenderTargetDesc renderTarget)
-		{
-			Surface = surface;
-			RenderTarget = renderTarget;
-		}
+    {
+        public SKPaintGLSurfaceEventArgs(SKSurface surface, GRBackendRenderTarget renderTarget)
+        {
+            Surface = surface;
+            RenderTarget = renderTarget;
+        }
 
-		public SKSurface Surface { get; private set; }
+        public SKSurface Surface { get; }
 
-		public GRBackendRenderTargetDesc RenderTarget { get; private set; }
-	}
+        public GRBackendRenderTarget RenderTarget { get; }
+    }
 }

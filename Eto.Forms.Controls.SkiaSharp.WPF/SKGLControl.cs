@@ -10,7 +10,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
 {
     public class SKGLControlHandler : WpfFrameworkElement<FrameworkElement, SKGLControl, Control.ICallback>, SKGLControl.ISKGLControl
     {
-
         private SKGLControl_WPF nativecontrol;
 
         public SKGLControlHandler()
@@ -31,13 +30,10 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
             get => nativecontrol.WinFormsControl.PaintSurface;
             set => nativecontrol.WinFormsControl.PaintSurface = value;
         }
-
-
     }
 
     public class SKGLControl_WPF : System.Windows.Controls.Grid
     {
-
         public SKGLControl_WinForms WinFormsControl;
 
         public SKGLControl_WPF()
@@ -66,7 +62,5 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
         {
             WinFormsControl.Invalidate();
         }
-
     }
-
 }

@@ -9,7 +9,7 @@ namespace Views.Mac
     public class SKGLView : NSOpenGLView
     {
         protected GRContext context;
-        protected GRBackendRenderTargetDesc renderTarget;
+        protected GRBackendRenderTarget renderTarget;
 
         // created in code
         public SKGLView()
@@ -58,13 +58,7 @@ namespace Views.Mac
             PixelFormat = new NSOpenGLPixelFormat(attrs);
         }
 
-        public SKSize CanvasSize
-        {
-            get
-            {
-                return new SKSize(renderTarget.Width, renderTarget.Height);
-            }
-        }
+        public SKSize CanvasSize => new SKSize(renderTarget.Width, renderTarget.Height);
 
         public override void PrepareOpenGL()
         {
@@ -79,7 +73,7 @@ namespace Views.Mac
 
         public event EventHandler<SKPaintGLSurfaceEventArgs> PaintSurface;
 
-        public virtual void DrawInSurface(SKSurface surface, GRBackendRenderTargetDesc renderTarget)
+        public virtual void DrawInSurface(SKSurface surface, GRBackendRenderTarget renderTarget)
 		{
 			if (PaintSurface != null) PaintSurface.Invoke(this, new SKPaintGLSurfaceEventArgs(surface, renderTarget));
 		}

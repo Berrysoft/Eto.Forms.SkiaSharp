@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK
 {
-
     public enum GLXAttribute : int
     {
         TRANSPARENT_BLUE_VALUE_EXT = 0x27,
@@ -165,5 +160,4 @@ namespace OpenTK
                 VisualID, Screen, Depth, Class);
         }
     }
-
 }

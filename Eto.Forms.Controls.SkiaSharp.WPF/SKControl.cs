@@ -11,7 +11,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
 {
     public class SKControlHandler : WpfFrameworkElement<FrameworkElement, SKControl, Control.ICallback>, SKControl.ISKControl
     {
-
         private SKControl_WPF nativecontrol;
 
         public SKControlHandler()
@@ -21,27 +20,19 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
         }
 
         public override Eto.Drawing.Color BackgroundColor { get; set; }
+
         public Action<SKSurface> PaintSurfaceAction
         {
-            get
-            {
-                return nativecontrol.PaintSurface;
-            }
-            set
-            {
-                nativecontrol.PaintSurface = value;
-            }
+            get => nativecontrol.PaintSurface;
+            set => nativecontrol.PaintSurface = value;
         }
-
     }
 
     public class SKControl_WPF : SKElement
     {
-
         public new Action<SKSurface> PaintSurface;
 
         private WriteableBitmap bitmap;
-
 
         public SKControl_WPF()
         {
@@ -49,7 +40,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-
             base.OnRender(drawingContext);
 
             int width, height;
@@ -91,7 +81,5 @@ namespace Eto.Forms.Controls.SkiaSharp.WPF
             bitmap.Unlock();
             drawingContext.DrawImage(bitmap, new Rect(0, 0, ActualWidth, ActualHeight));
         }
-
     }
-
 }

@@ -7,7 +7,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
 {
     public class SKGLControlHandler : WindowsControl<System.Windows.Forms.Control, SKGLControl, Control.ICallback>, SKGLControl.ISKGLControl
     {
-
         private SKGLControl_WinForms nativecontrol;
 
         public SKGLControlHandler()
@@ -20,8 +19,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
             get => nativecontrol.PaintSurface;
             set => nativecontrol.PaintSurface = value;
         }
-
-
     }
 
     public class SKGLControl_WinForms : global::SkiaSharp.Views.Desktop.SKGLControl
@@ -36,7 +33,7 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
         public Action<MouseEventArgs> WPFMouseDoubleClick;
 
         private GRContext grContext;
-        private GRBackendRenderTargetDesc renderTarget;
+        private GRBackendRenderTarget renderTarget;
 
         public SKGLControl_WinForms()
         {
@@ -45,9 +42,6 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
-
-            //base.OnPaint(e);
-
             // create the contexts if not done already
             if (grContext == null)
             {
@@ -59,11 +53,10 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
             }
 
             // update to the latest dimensions
-            renderTarget.Width = Width;
-            renderTarget.Height = Height;
+            renderTarget = new GRBackendRenderTarget(Width, Height, renderTarget.SampleCount, renderTarget.StencilBits, renderTarget.GetGlFramebufferInfo());
 
             // create the surface
-            using (var surface = SKSurface.Create(grContext, renderTarget))
+            using (var surface = SKSurface.Create(grContext, renderTarget, SKColorType.Rgba8888))
             {
 
                 if (PaintSurface != null) PaintSurface.Invoke(surface);
@@ -90,28 +83,16 @@ namespace Eto.Forms.Controls.SkiaSharp.WinForms
             }
         }
 
-        public static GRBackendRenderTargetDesc CreateRenderTarget()
+        public static GRBackendRenderTarget CreateRenderTarget()
         {
-            int framebuffer, stencil, samples;
-            Gles.glGetIntegerv(Gles.GL_FRAMEBUFFER_BINDING, out framebuffer);
-            Gles.glGetIntegerv(Gles.GL_STENCIL_BITS, out stencil);
-            Gles.glGetIntegerv(Gles.GL_SAMPLES, out samples);
+            Gles.glGetIntegerv(Gles.GL_FRAMEBUFFER_BINDING, out int framebuffer);
+            Gles.glGetIntegerv(Gles.GL_STENCIL_BITS, out int stencil);
+            Gles.glGetIntegerv(Gles.GL_SAMPLES, out int samples);
 
             int bufferWidth = 0;
             int bufferHeight = 0;
 
-            return new GRBackendRenderTargetDesc
-            {
-                Width = bufferWidth,
-                Height = bufferHeight,
-                Config = GRPixelConfig.Rgba8888,
-                Origin = GRSurfaceOrigin.BottomLeft,
-                SampleCount = samples,
-                StencilBits = stencil,
-                RenderTargetHandle = (IntPtr)framebuffer,
-            };
+            return new GRBackendRenderTarget(bufferWidth, bufferHeight, samples, stencil, new GRGlFramebufferInfo((uint)framebuffer, GRPixelConfig.Rgba8888.ToGlSizedFormat()));
         }
-
     }
-
 }

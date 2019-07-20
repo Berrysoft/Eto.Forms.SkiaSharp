@@ -4,8 +4,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using OpenTK.Graphics;
 using OpenTK.Platform;
-using OpenTK.Platform.X11;
-using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.X11
 {
@@ -14,12 +12,7 @@ namespace OpenTK.X11
     /// </summary>
     public static class XWindowInfoInitializer
     {
-
-#if GTK3
         private const string UnixLibGdkName = "libgdk-3.so.0";
-#else
-        const string UnixLibGdkName = "libgdk-x11-2.0.so.0";
-#endif
         private const string UnixLibX11Name = "libX11.so.6";
         private const string UnixLibGLName = "libGL.so.1";
 
@@ -36,13 +29,8 @@ namespace OpenTK.X11
         {
             IntPtr display = gdk_x11_display_get_xdisplay(displayHandle);
 
-#if GTK3
             IntPtr windowXid = gdk_x11_window_get_xid(gdkWindowHandle);
             IntPtr rootWindowXid = gdk_x11_window_get_xid(gdkRootWindowHandle);
-#else
-            IntPtr windowXid = gdk_x11_drawable_get_xid(gdkWindowHandle);
-            IntPtr rootWindowXid = gdk_x11_drawable_get_xid(gdkRootWindowHandle);
-#endif
 
             IntPtr visualInfo;
             if (mode.Index.HasValue)
@@ -148,21 +136,12 @@ namespace OpenTK.X11
         [SuppressUnmanagedCodeSecurity, DllImport(UnixLibX11Name)]
         private static extern void XFree(IntPtr handle);
 
-#if GTK3
         /// <summary> Returns the X resource (window or pixmap) belonging to a GdkWindow. </summary>
         /// <remarks> XID gdk_x11_window_get_xid(GdkWindow *drawable); </remarks>
         /// <param name="gdkDisplay"> The GdkDrawable. </param>
         /// <returns> The ID of window's X resource. </returns>
         [SuppressUnmanagedCodeSecurity, DllImport(UnixLibGdkName)]
         private static extern IntPtr gdk_x11_window_get_xid(IntPtr gdkDisplay);
-#else
-        /// <summary> Returns the X resource (window or pixmap) belonging to a GdkDrawable. </summary>
-        /// <remarks> XID gdk_x11_drawable_get_xid(GdkDrawable *drawable); </remarks>
-        /// <param name="gdkDisplay"> The GdkDrawable. </param>
-        /// <returns> The ID of drawable's X resource. </returns>
-        [SuppressUnmanagedCodeSecurity, DllImport(UnixLibGdkName)]
-        static extern IntPtr gdk_x11_drawable_get_xid(IntPtr gdkDisplay);
-#endif
         /// <summary> Returns the X display of a GdkDisplay. </summary>
         /// <remarks> Display* gdk_x11_display_get_xdisplay(GdkDisplay *display); </remarks>
         /// <param name="gdkDisplay"> The GdkDrawable. </param>
