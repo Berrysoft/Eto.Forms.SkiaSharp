@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Authors>Daniel Medeiros;Berrysoft</Authors>
+    <Copyright>Copyright (c) 2017 Daniel Medeiros;Copyright (c) 2019 Berrysoft</Copyright>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>GitHub</RepositoryType>
+    <RepositoryUrl>https://github.com/Berrysoft/Eto.Forms.SkiaSharp</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Berrysoft/Eto.Forms.SkiaSharp</PackageProjectUrl>
+    <Description>SkiaSharp Canvas Controls for Eto.Forms</Description>
+  </PropertyGroup>
+
+</Project>

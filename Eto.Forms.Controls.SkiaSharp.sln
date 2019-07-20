@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eto.Forms.Controls.SkiaShar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eto.Forms.Controls.SkiaSharp.GTK", "Eto.Forms.Controls.SkiaSharp.GTK\Eto.Forms.Controls.SkiaSharp.GTK.csproj", "{7B62BC2B-1598-4FB5-ADB9-EEDA64366182}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eto.Forms.Controls.SkiaSharp.Tests", "Eto.Forms.Controls.SkiaSharp.Tests\Eto.Forms.Controls.SkiaSharp.Tests.csproj", "{8D50AF91-275A-4357-A63B-C16347EB7334}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eto.Forms.Controls.SkiaSharp.Tests", "Eto.Forms.Controls.SkiaSharp.Tests\Eto.Forms.Controls.SkiaSharp.Tests.csproj", "{8D50AF91-275A-4357-A63B-C16347EB7334}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5B2B1B52-A30C-46C9-9ECC-F78238796142}"
+	ProjectSection(SolutionItems) = preProject
+		ver.props = ver.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

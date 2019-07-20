@@ -17,4 +17,6 @@
     <ProjectReference Include="..\Eto.Forms.Controls.SkiaSharp\Eto.Forms.Controls.SkiaSharp.csproj" />
   </ItemGroup>
 
+  <Import Project="../ver.props" />
+
 </Project>
